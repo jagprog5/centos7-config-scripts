@@ -10,12 +10,12 @@ echo "user_pref(\"browser.in-content.dark-mode\", true);\
 user_pref(\"browser.display.background_color\", \" #1a1a1a\");\
 user_pref(\"browser.startup.page\", 3);" > user.js
 
-# install firefox extensions for dark_reader and ublock_origin
-# still requires a button press, but should still be reliable even w/ firefox version change
 curl -LO https://addons.mozilla.org/firefox/downloads/file/3615260/dark_reader.xpi
+# I can't automatically install the add-ons:
+# https://blog.mozilla.org/addons/2019/10/31/firefox-to-discontinue-sideloaded-extensions/
+# Unfortunately a button press is required per add-on
 firefox -new-window dark_reader.xpi
 curl -LO https://addons.mozilla.org/firefox/downloads/file/3629683/ublock_origin.xpi
-firefox -new-window ublock_origin.xpi
 
 hostnamectl set-hostname old-boi
 
@@ -46,8 +46,11 @@ source ~/.bashrc
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce docker-ce-cli containerd.io
-sudo systemctl enable docker
+sudo systemctl enable docker.service
 
-read -n 1 -s -r -p "Press any key to finish."
+read -n 1 -s -r -p "Press any key when done with previous firefox add-on prompt."
+echo ""
+firefox -new-window ublock_origin.xpi
+read -n 1 -s -r -p "Press any key when done with previous firefox add-on prompt."
 echo ""
 rm -v *.xpi
