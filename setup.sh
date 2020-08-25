@@ -6,11 +6,14 @@ VER=`cat /etc/redhat-release`
 sudo sh -c "echo -e \"<html>\n<body style=\"background-color:black\;\"></body>\n</html>\" > /usr/share/doc/HTML/index.html"
 cd ~/.mozilla/firefox/
 cd $(ls | grep '\.default-default$')
-echo -e "user_pref(\"browser.in-content.dark-mode\", true);\nuser_pref(\"browser.display.background_color\", \" #1a1a1a\");\nuser_pref(\"browser.startup.page\", 3);" > user.js
+echo -e "user_pref(\"browser.in-content.dark-mode\", true);\nuser_pref(\"browser.display.background_color\", \" #000000\");\nuser_pref(\"browser.startup.page\", 3);" > user.js
+# mkdir chrome
+# cd chrome/
+# echo -e "#browser vbox#appcontent tabbrowser, #content, #tabbrowser-tabpanels,\nbrowser[type=content-primary],browser[type=content] > html {\n    background: #000000 !important\n}" > userChrome.css
 
 # I can't automatically install the add-ons:
 # https://blog.mozilla.org/addons/2019/10/31/firefox-to-discontinue-sideloaded-extensions/
-# Unfortunately a button press is required per add-on
+# Unfortunately a button prompt is required per add-on
 curl -LO "https://addons.mozilla.org/firefox/downloads/file/3615260/dark_reader.xpi"
 curl -LO "https://addons.mozilla.org/firefox/downloads/file/3629683/ublock_origin.xpi"
 READERHASH=`sha256sum dark_reader.xpi`
@@ -37,7 +40,16 @@ read -n 1 -s -r -p "Press any key when done with previous firefox add-on prompt.
 echo ""
 rm -v *.xpi
 
-hostnamectl set-hostname old-boi
+echo "Enter hostname: "
+read HOST_NAME
+[ -z "$HOST_NAME" ] && hostnamectl set-hostname "$HOST_NAME"
+git config --global color.ui auto
+echo "Enter git global email: "
+read GIT_EMAIL
+[ -z "$GIT_EMAIL" ] && git config --global user.email "$GIT_EMAIL"
+echo "Enter git global name: "
+read GIT_NAME
+[ -z "$GIT_NAME" ] && git config --global user.email "$GIT_NAME"
 
 gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.desktop.interface gtk-theme HighContrastInverse
@@ -57,6 +69,7 @@ sudo yum update -y
 sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 sudo yum install -y code
 
+echo -e "unbind C-b\nset -g prefix C-Space\nbind Space send-prefix" > ~/.tmux.conf
 sudo yum install -y tmux
 echo "alias tm=\"tmux attach || tmux\"" >> ~/.bashrc
 source ~/.bashrc

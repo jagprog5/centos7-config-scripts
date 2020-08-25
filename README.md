@@ -1,7 +1,21 @@
 ## A setup script
 
-- Makes firefox completely dark mode (and gets add-ons dark-reader & ublock-origin)
-- Sets the gnome theme & background (everything dark)
-- Adds shortcut ctrl+alt+t => open terminal
-- Installs vscode, tmux, docker
-- Installs keepass2, creates launcher icon
+- Firefox
+  - Enable start from last session
+  - Get ublock-origin add-on
+  - Dark-mode
+    - Get dark-reader add-on
+    - Various config (UI, new-tabs, start-screen, everything dark)
+- Gnome
+  - Add ctrl-alt-T opens terminal
+  - Set theme (dark), background (blank), remove desktop icons, various UI tweaks
+- tmux
+  - Add tm bash alias
+  - Replace ctrl+b w/ ctrl+space
+- Install (with yum repo setup)
+  - docker
+  - vscode
+  - keepass2
+    - run with mono
+    - integrate with gnome launcher
+- Git config (prompt for name/email)
