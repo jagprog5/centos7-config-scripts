@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Name=KeePass2
+Icon=/opt/keepass2/icon.svg
+Exec=mono /opt/keepass2/KeePass.exe
