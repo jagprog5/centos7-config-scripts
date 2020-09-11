@@ -1,4 +1,8 @@
-# Custom modifier key
+# start window & pane index at 1 rather than 0 (makes more sense on keyboard)
+set -g base-index 1
+setw -g pane-base-index 1
+
+# C-Space as modifier key
 set -g prefix C-Space
 unbind-key C-b
 bind-key C-Space send-prefix
@@ -6,6 +10,10 @@ bind-key S-Space send-prefix
 
 # Terminal improvements
 set -g status-keys vi
+# Default is 2000
+set -g history-limit 10000
+
+bind r source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded"
 
 # Shift arrow to switch panes
 bind -n S-Left  select-pane -L
